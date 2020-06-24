@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 
 // Set env
 process.env.NODE_ENV = 'development';
@@ -13,12 +13,19 @@ let aboutWindow;
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'ImageShrink',
-        width: 500,
+        width: isDev ? 700 : 500,
         height: 600,
         icon: './assets/icons/Icon_256x256.png',
         resizable: isDev ? true : false,
         backgroundColor: 'white',
+        webPreferences: {
+            nodeIntegration: true,
+        }
     });
+
+    if (isDev) {
+        mainWindow.webContents.openDevTools()
+    }
 
     mainWindow.loadFile('./app/index.html')
 }
@@ -91,6 +98,11 @@ const menu = [
         }
     ] : [])
 ]
+
+ipcMain.on('image:minimize', (e, options) => {
+    console.log(options);
+    
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
