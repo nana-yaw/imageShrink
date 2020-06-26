@@ -21,7 +21,7 @@ function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'ImageShrink',
         width: isDev ? 700 : 500,
-        height: 600,
+        height: 840,
         icon: './assets/icons/Icon_256x256.png',
         resizable: isDev ? true : false,
         backgroundColor: 'white',
@@ -129,9 +129,11 @@ async function shrinkImage({ imgPath, quality, dest}) {
         // console.log(files);
         log.info(files);
 
+        let newFile = files[0].destinationPath
+
         shell.openItem(dest);
 
-        mainWindow.webContents.send('image:done');
+        mainWindow.webContents.send('image:done',newFile);
         
     } catch (error) {
         // console.log(error);
