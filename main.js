@@ -24,6 +24,9 @@ function createMainWindow() {
         height: 840,
         icon: './assets/icons/Icon_256x256.png',
         resizable: isDev ? true : false,
+        alwaysOnTop: false,
+        fullscreen: false,
+        kiosk: false,
         backgroundColor: 'white',
         webPreferences: {
             nodeIntegration: true,
