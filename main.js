@@ -1,6 +1,6 @@
 const path = require('path');
 const os = require('os');
-const { app, BrowserWindow, Menu, ipcMain , shell} = require('electron');
+const { app, BrowserWindow, screen, Menu, ipcMain , shell} = require('electron');
 const imagemin = require('imagemin');
 const imageminMozjpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
@@ -18,20 +18,60 @@ let mainWindow;
 let aboutWindow;
 
 function createMainWindow() {
-    mainWindow = new BrowserWindow({
-        title: 'ImageShrink',
-        width: isDev ? 700 : 500,
-        height: 840,
-        icon: './assets/icons/Icon_256x256.png',
-        resizable: isDev ? true : false,
-        alwaysOnTop: false,
-        fullscreen: false,
-        kiosk: false,
-        backgroundColor: 'white',
-        webPreferences: {
-            nodeIntegration: true,
-        }
-    });
+
+    let display = screen.getPrimaryDisplay()
+        mainWindow = new BrowserWindow({
+            title: 'ImageShrink',
+            x: display.bounds.x,
+            y: display.bounds.y,
+            icon: './assets/icons/Icon_256x256.png',
+            resizable: isDev ? true : false,
+            width: display.size.width,
+            height: display.size.height,
+            fullscreen: true,
+            kiosk: true,
+            focusable: false,
+            backgroundColor: 'white',
+            webPreferences: {
+                nodeIntegration: true,
+            }
+        });
+
+    // if (os.platform !== 'linux') {
+        
+    //     mainWindow = new BrowserWindow({
+    //         title: 'ImageShrink',
+    //         width: isDev ? 700 : 500,
+    //         height: 840,
+    //         icon: './assets/icons/Icon_256x256.png',
+    //         resizable: isDev ? true : false,
+    //         alwaysOnTop: false,
+    //         fullscreen: false,
+    //         kiosk: false,
+    //         backgroundColor: 'white',
+    //         webPreferences: {
+    //             nodeIntegration: true,
+    //         }
+    //     });
+    // } else {
+    //     let display = screen.getPrimaryDisplay()
+    //     mainWindow = new BrowserWindow({
+    //         title: 'ImageShrink',
+    //         x: display.bounds.x,
+    //         y: display.bounds.y,
+    //         icon: './assets/icons/Icon_256x256.png',
+    //         resizable: isDev ? true : false,
+    //         width: display.size.width,
+    //         height: display.size.height,
+    //         fullscreen: true,
+    //         kiosk: true,
+    //         focusable: true,
+    //         backgroundColor: 'white',
+    //         webPreferences: {
+    //             nodeIntegration: true,
+    //         }
+    //     });
+    // }
 
     if (isDev) {
         mainWindow.webContents.openDevTools()
