@@ -15,7 +15,7 @@
   "author": "Edward Osei-Nyarko",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^9.4.0",
+    "electron": "^11.5.0",
     "electron-packager": "^14.2.1",
     "nodemon": "^2.0.3"
   },
